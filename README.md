@@ -15,22 +15,28 @@ This bookmarklet generates a deployment log message in the format: `{time} Jeff 
 1. Copy a URL to your clipboard (the deployment URL you want to reference)
 2. Click the bookmarklet from your bookmarks bar or menu
 3. The bookmarklet will:
-   - Try to read the URL from your clipboard automatically
-   - If clipboard access fails, it will prompt you to paste the URL
-   - Generate a timestamp in MM/DD/YYYY, HH:MM:SS format
-   - Create the deployment log message
-   - Copy the result to your clipboard (or show it in a prompt for manual copying)
+   - Read the URL from your clipboard automatically
+   - Generate a timestamp in HH:MM format (Central Time)
+   - Create the deployment log message in both plain text and rich HTML formats
+   - Copy both formats to your clipboard simultaneously
 
 ## Example Output
 
+**Plain Text:**
 ```
-12/20/2024, 14:30:15 Jeff Puckett started [deployment](https://github.com/user/repo/pull/123)
+17:26 Jeff Puckett started [deployment](https://github.com/user/repo/pull/123)
 ```
 
-## Browser Compatibility
+**Rich HTML:**
+- Time and text with Arial 11pt styling
+- "Jeff Puckett" as clickable email link with rich metadata
+- "deployment" as clickable link to your clipboard URL
 
-- **Modern browsers**: Will automatically read from clipboard and copy result to clipboard
-- **Older browsers or restricted contexts**: Will prompt for URL input and show result in a dialog for manual copying
+## Browser Requirements
+
+- **Modern browsers only**: Requires support for the modern Clipboard API (`navigator.clipboard`)
+- Supports Chrome 76+, Firefox 63+, Safari 13.1+, Edge 79+
+- Must allow clipboard access (you may see a permission prompt on first use)
 
 ## Files
 
