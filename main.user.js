@@ -101,17 +101,60 @@ function createDeploymentLogButton() {
       box-shadow: 0 1px 3px rgba(0,0,0,0.12);
       z-index: 10000;
       transition: background-color 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .deployment-log-button:hover {
       background: #2c974b;
+    }
+    .deployment-log-close {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s ease;
+    }
+    .deployment-log-close:hover {
+      background: rgba(255, 255, 255, 0.3);
     }
   `;
   document.head.appendChild(style);
 
   const button = document.createElement("button");
-  button.textContent = "Copy URL Log";
   button.className = "deployment-log-button";
-  button.addEventListener("click", generateDeploymentLog);
+
+  // Create close button
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "×";
+  closeBtn.className = "deployment-log-close";
+  closeBtn.addEventListener("click", (e) => {
+    e.stopPropagation(); // Prevent triggering the main button
+    button.remove();
+  });
+
+  // Create text span
+  const textSpan = document.createElement("span");
+  textSpan.textContent = "Copy URL Log";
+
+  // Add elements to button
+  button.appendChild(closeBtn);
+  button.appendChild(textSpan);
+
+  button.addEventListener("click", (e) => {
+    // Only trigger if not clicking the close button
+    if (e.target !== closeBtn) {
+      generateDeploymentLog();
+    }
+  });
 
   document.body.appendChild(button);
 }
