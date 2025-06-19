@@ -82,34 +82,35 @@ async function generateDeploymentLog() {
 }
 
 function createDeploymentLogButton() {
+  // Add CSS for hover effect
+  const style = document.createElement("style");
+  style.textContent = `
+    .deployment-log-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #2ea043;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      z-index: 10000;
+      transition: background-color 0.2s ease;
+    }
+    .deployment-log-button:hover {
+      background: #2c974b;
+    }
+  `;
+  document.head.appendChild(style);
+
   const button = document.createElement("button");
   button.textContent = "Copy URL Log";
-  button.style.cssText = `
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: #2ea043;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-    z-index: 10000;
-    transition: background-color 0.2s ease;
-  `;
-
-  button.addEventListener("mouseenter", () => {
-    button.style.background = "#2c974b";
-  });
-
-  button.addEventListener("mouseleave", () => {
-    button.style.background = "#2ea043";
-  });
-
+  button.className = "deployment-log-button";
   button.addEventListener("click", generateDeploymentLog);
 
   document.body.appendChild(button);
