@@ -6,6 +6,8 @@
 // @author Jeff Puckett
 // @version 0.1.0
 // @description Helper scripts for creating deployment logs
+// @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
+// @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
 // ==/UserScript==
 function showSuccessToast(message) {
   const toast = document.createElement("div");
