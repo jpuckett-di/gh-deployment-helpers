@@ -1,15 +1,18 @@
 # Deployment Log Helper - Userscript
 
-This userscript automatically adds a "Copy URL Log" button to GitHub Actions pages that copies the current page URL as plain text and a formatted deployment log as rich HTML. It supports multiple repositories with different message formats.
+This userscript automatically adds buttons to GitHub Actions pages and Google Docs. On GitHub Actions pages, it copies deployment logs to clipboard. On Google Docs, it inserts deployment success text at the cursor position.
 
 ## Features
 
-- 🔘 **One-click button** - Adds a "Copy URL Log" button to the top-left corner of GitHub Actions pages
-- 📋 **Dual clipboard formats** - Copies current page URL as plain text + rich HTML deployment log simultaneously
-- 🕒 **Auto timestamp** - Generates timestamp in 12-hour format with AM/PM (Central Time) for HTML format
+- 🔘 **Adaptive button** - Adds context-appropriate buttons to supported pages
+  - **GitHub Actions**: "Copy URL Log" button for clipboard operations
+  - **Google Docs**: "Declare Success" button for text insertion
+- 📋 **Dual clipboard formats** - Copies current page URL as plain text + rich HTML deployment log simultaneously (GitHub only)
+- ✏️ **Success text to clipboard** - Copies timestamped success message for manual pasting (Google Docs only)
+- 🕒 **Auto timestamp** - Generates timestamp in 12-hour format with AM/PM (Central Time)
 - 🌐 **Current page URL** - Uses the current GitHub Actions page URL automatically
 - ❌ **Removable** - Click the × to remove the button if not needed
-- ✅ **Success feedback** - Shows a green toast notification when copied
+- ✅ **Success feedback** - Shows a green toast notification
 
 ## How to Install
 
@@ -27,6 +30,8 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
 
 ## How to Use
 
+### GitHub Actions Pages
+
 1. Navigate to any GitHub Actions run page matching these patterns:
 
    - `https://github.com/carsdotcom/di-websites-platform/actions/runs/*`
@@ -41,9 +46,28 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
    - Copy a timestamped deployment log message as rich HTML
    - Show a success notification
 
+### Google Docs
+
+1. Navigate to the deployment log document:
+   `https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*`
+
+2. You'll see a green "Declare Success" button in the top-left corner with an × close button:
+   **[×] Declare Success**
+
+3. Click the button to:
+
+   - Copy "{time} deployment declared successfully" to your clipboard
+   - Show a success notification
+
+4. Manually paste (Ctrl+V or Cmd+V) at your desired location in the document
+
+### General
+
 4. Click the × to remove the button if you don't need it
 
 ## Example Output
+
+### GitHub Actions Pages
 
 **Plain Text:**
 
@@ -63,6 +87,16 @@ _Formatted as: `5:26 AM deployment completed and <a href="url">test suite</a> st
 - "Jeff Puckett" as clickable email link with rich person metadata (websites-platform only)
 - Link text changes based on repository ("deployment" vs "test suite")
 
+### Google Docs
+
+**Copied Text:**
+
+```
+5:26 AM deployment declared successfully
+```
+
+- Text is copied to clipboard for manual pasting in the document
+
 ## Browser Requirements
 
 - **Modern browsers**: Requires support for the Clipboard API (`navigator.clipboard`)
@@ -76,16 +110,30 @@ _Formatted as: `5:26 AM deployment completed and <a href="url">test suite</a> st
 
 ## URL Pattern
 
-The script activates on GitHub Actions pages matching:
+The script activates on the following pages:
+
+**GitHub Actions:**
 
 ```
 https://github.com/carsdotcom/di-websites-platform/actions/runs/*
 https://github.com/carsdotcom/di-playwright-automation/actions/runs/*
 ```
 
-The script uses different message formats depending on the repository:
+**Google Docs:**
+
+```
+https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*
+```
+
+### Message Formats
+
+**GitHub Actions** (copied to clipboard):
 
 - **di-websites-platform**: `{time} Jeff Puckett started [deployment]({url})`
 - **di-playwright-automation**: `{time} deployment completed and [test suite]({url}) started`
 
-To use on different repositories, modify the `@match` directives in the userscript header.
+**Google Docs** (copied to clipboard):
+
+- **deployment log**: `{time} deployment declared successfully`
+
+To use on different pages, modify the `@match` directives in the userscript header.

@@ -3,9 +3,10 @@
 // @namespace Violentmonkey Scripts
 // @match https://github.com/carsdotcom/di-websites-platform/actions/runs/*
 // @match https://github.com/carsdotcom/di-playwright-automation/actions/runs/*
+// @match https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*
 // @grant none
 // @author Jeff Puckett
-// @version 0.3.1
+// @version 1.0.0
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -91,6 +92,19 @@ async function generateDeploymentLog() {
   }
 }
 
+async function declareSuccess() {
+  try {
+    const time = getCurrentTime();
+    const text = `${time} deployment declared successfully`;
+
+    // Copy text to clipboard for manual pasting in Google Docs
+    await navigator.clipboard.writeText(text);
+    showSuccessToast("✅ Success text copied to clipboard!");
+  } catch (error) {
+    alert("Error declaring success: " + error.message);
+  }
+}
+
 function createDeploymentLogButton() {
   // Add CSS for hover effect
   const style = document.createElement("style");
@@ -158,7 +172,14 @@ function createDeploymentLogButton() {
 
   // Create text span
   const textSpan = document.createElement("span");
-  textSpan.textContent = "Copy URL Log";
+  const url = getCurrentUrl();
+
+  // Check if we're on Google Docs
+  if (url.includes("docs.google.com")) {
+    textSpan.textContent = "Declare Success";
+  } else {
+    textSpan.textContent = "Copy URL Log";
+  }
 
   // Add elements to button
   button.appendChild(closeBtn);
@@ -167,7 +188,11 @@ function createDeploymentLogButton() {
   button.addEventListener("click", (e) => {
     // Only trigger if not clicking the close button
     if (e.target !== closeBtn) {
-      generateDeploymentLog();
+      if (url.includes("docs.google.com")) {
+        declareSuccess();
+      } else {
+        generateDeploymentLog();
+      }
     }
   });
 
