@@ -4,7 +4,7 @@
 // @match https://github.com/carsdotcom/di-websites-platform/actions/runs/*
 // @grant none
 // @author Jeff Puckett
-// @version 0.1.0
+// @version 0.2.0
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -68,12 +68,11 @@ async function generateDeploymentLog() {
     const time = getCurrentTime();
     const url = getCurrentUrl();
 
-    const logMessage = `${time} Jeff Puckett started [deployment](${url})`;
     const htmlMessage = `<meta charset="utf-8"><b style="font-weight:normal;" id="docs-internal-guid-ab2a93a8-7fff-d408-d635-cc6fdba8b249"><span style="font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">${time} </span><a href="mailto:jpuckett@dealerinspire.com" style="text-decoration:none;"><span style="font-size:11pt;font-family:Arial,sans-serif;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;" data-rich-links="{&quot;per_n&quot;:&quot;Jeff Puckett&quot;,&quot;per_e&quot;:&quot;jpuckett@dealerinspire.com&quot;,&quot;type&quot;:&quot;person&quot;}">Jeff Puckett</span></a><span style="font-size:11pt;font-family:Arial,sans-serif;color:#000000;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;"> started </span><a href="${url}" style="text-decoration:none;"><span style="font-size:11pt;font-family:Arial,sans-serif;color:#1155cc;background-color:transparent;font-weight:400;font-style:normal;font-variant:normal;text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;vertical-align:baseline;white-space:pre;white-space:pre-wrap;">deployment</span></a></b>`;
 
     // Copy to clipboard
     const clipboardItem = new ClipboardItem({
-      "text/plain": new Blob([logMessage], { type: "text/plain" }),
+      "text/plain": new Blob([url], { type: "text/plain" }),
       "text/html": new Blob([htmlMessage], { type: "text/html" }),
     });
     await navigator.clipboard.write([clipboardItem]);

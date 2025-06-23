@@ -1,12 +1,12 @@
 # Deployment Log Helper - Userscript
 
-This userscript automatically adds a "Copy URL Log" button to GitHub Actions pages that generates deployment log messages in the format: `{time} Jeff Puckett started [deployment]({current_page_url})`
+This userscript automatically adds a "Copy URL Log" button to GitHub Actions pages that copies the current page URL as plain text and a formatted deployment log as rich HTML.
 
 ## Features
 
 - 🔘 **One-click button** - Adds a "Copy URL Log" button to the top-left corner of GitHub Actions pages
-- 📋 **Dual clipboard formats** - Copies both plain text and rich HTML formats simultaneously
-- 🕒 **Auto timestamp** - Generates timestamp in HH:MM format (Central Time)
+- 📋 **Dual clipboard formats** - Copies current page URL as plain text + rich HTML deployment log simultaneously
+- 🕒 **Auto timestamp** - Generates timestamp in HH:MM format (Central Time) for HTML format
 - 🌐 **Current page URL** - Uses the current GitHub Actions page URL automatically
 - ❌ **Removable** - Click the × to remove the button if not needed
 - ✅ **Success feedback** - Shows a green toast notification when copied
@@ -35,9 +35,8 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
 
 3. Click the button to:
 
-   - Generate a timestamp in Central Time
-   - Create the deployment log message using the current page URL
-   - Copy both plain text and rich HTML formats to your clipboard
+   - Copy the current page URL as plain text
+   - Copy a timestamped deployment log message as rich HTML
    - Show a success notification
 
 4. Click the × to remove the button if you don't need it
@@ -47,10 +46,11 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
 **Plain Text:**
 
 ```
-17:26 Jeff Puckett started [deployment](https://github.com/carsdotcom/di-websites-platform/actions/runs/12345)
+https://github.com/carsdotcom/di-websites-platform/actions/runs/12345
 ```
 
 **Rich HTML:**
+_Formatted as: `17:26 Jeff Puckett started <a href="https://github.com/carsdotcom/di-websites-platform/actions/runs/12345">deployment</a>`_
 
 - Time and text with Arial 11pt styling
 - "Jeff Puckett" as clickable email link with rich person metadata
