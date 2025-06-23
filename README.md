@@ -6,7 +6,7 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
 
 - 🔘 **One-click button** - Adds a "Copy URL Log" button to the top-left corner of GitHub Actions pages
 - 📋 **Dual clipboard formats** - Copies current page URL as plain text + rich HTML deployment log simultaneously
-- 🕒 **Auto timestamp** - Generates timestamp in HH:MM format (Central Time) for HTML format
+- 🕒 **Auto timestamp** - Generates timestamp in 12-hour format with AM/PM (Central Time) for HTML format
 - 🌐 **Current page URL** - Uses the current GitHub Actions page URL automatically
 - ❌ **Removable** - Click the × to remove the button if not needed
 - ✅ **Success feedback** - Shows a green toast notification when copied
@@ -54,10 +54,10 @@ https://github.com/carsdotcom/di-websites-platform/actions/runs/12345
 **Rich HTML:**
 
 _For di-websites-platform:_
-_Formatted as: `17:26 Jeff Puckett started <a href="url">deployment</a>`_
+_Formatted as: `5:26 AM Jeff Puckett started <a href="url">deployment</a>`_
 
 _For di-playwright-automation:_
-_Formatted as: `17:26 deployment completed and <a href="url">test suite</a> started`_
+_Formatted as: `5:26 AM deployment completed and <a href="url">test suite</a> started`_
 
 - Time and text with Arial 11pt styling
 - "Jeff Puckett" as clickable email link with rich person metadata (websites-platform only)

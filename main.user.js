@@ -5,7 +5,7 @@
 // @match https://github.com/carsdotcom/di-playwright-automation/actions/runs/*
 // @grant none
 // @author Jeff Puckett
-// @version 0.3.0
+// @version 0.3.1
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -59,7 +59,7 @@ function getCurrentTime() {
   return now.toLocaleString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
+    hour12: true,
     timeZone: "America/Chicago",
   });
 }
