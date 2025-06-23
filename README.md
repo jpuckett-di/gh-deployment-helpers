@@ -1,6 +1,6 @@
 # Deployment Log Helper - Userscript
 
-This userscript automatically adds a "Copy URL Log" button to GitHub Actions pages that copies the current page URL as plain text and a formatted deployment log as rich HTML.
+This userscript automatically adds a "Copy URL Log" button to GitHub Actions pages that copies the current page URL as plain text and a formatted deployment log as rich HTML. It supports multiple repositories with different message formats.
 
 ## Features
 
@@ -27,8 +27,10 @@ This userscript automatically adds a "Copy URL Log" button to GitHub Actions pag
 
 ## How to Use
 
-1. Navigate to any GitHub Actions run page matching the pattern:
-   `https://github.com/carsdotcom/di-websites-platform/actions/runs/*`
+1. Navigate to any GitHub Actions run page matching these patterns:
+
+   - `https://github.com/carsdotcom/di-websites-platform/actions/runs/*`
+   - `https://github.com/carsdotcom/di-playwright-automation/actions/runs/*`
 
 2. You'll see a green "Copy URL Log" button in the top-left corner with an × close button:
    **[×] Copy URL Log**
@@ -50,11 +52,16 @@ https://github.com/carsdotcom/di-websites-platform/actions/runs/12345
 ```
 
 **Rich HTML:**
-_Formatted as: `17:26 Jeff Puckett started <a href="https://github.com/carsdotcom/di-websites-platform/actions/runs/12345">deployment</a>`_
+
+_For di-websites-platform:_
+_Formatted as: `17:26 Jeff Puckett started <a href="url">deployment</a>`_
+
+_For di-playwright-automation:_
+_Formatted as: `17:26 deployment completed and <a href="url">test suite</a> started`_
 
 - Time and text with Arial 11pt styling
-- "Jeff Puckett" as clickable email link with rich person metadata
-- "deployment" as clickable link to the current GitHub Actions page
+- "Jeff Puckett" as clickable email link with rich person metadata (websites-platform only)
+- Link text changes based on repository ("deployment" vs "test suite")
 
 ## Browser Requirements
 
@@ -69,10 +76,16 @@ _Formatted as: `17:26 Jeff Puckett started <a href="https://github.com/carsdotco
 
 ## URL Pattern
 
-The script only activates on GitHub Actions pages matching:
+The script activates on GitHub Actions pages matching:
 
 ```
 https://github.com/carsdotcom/di-websites-platform/actions/runs/*
+https://github.com/carsdotcom/di-playwright-automation/actions/runs/*
 ```
 
-To use on different repositories, modify the `@match` directive in the userscript header.
+The script uses different message formats depending on the repository:
+
+- **di-websites-platform**: `{time} Jeff Puckett started [deployment]({url})`
+- **di-playwright-automation**: `{time} deployment completed and [test suite]({url}) started`
+
+To use on different repositories, modify the `@match` directives in the userscript header.
