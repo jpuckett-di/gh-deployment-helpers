@@ -4,7 +4,7 @@
 // @match https://github.com/carsdotcom/di-websites-platform/actions/runs/*
 // @grant none
 // @author Jeff Puckett
-// @version 0.2.0
+// @version 0.2.1
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -101,13 +101,18 @@ function createDeploymentLogButton() {
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,0.12);
       z-index: 10000;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.2s ease, box-shadow 0.1s ease, transform 0.1s ease;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .deployment-log-button:hover {
       background: #2c974b;
+    }
+    .deployment-log-button:active {
+      background: #238636;
+      box-shadow: 0 0 1px rgba(0,0,0,0.2);
+      transform: translateY(1px);
     }
     .deployment-log-close {
       background: rgba(255, 255, 255, 0.2);
