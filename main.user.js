@@ -6,7 +6,7 @@
 // @match https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*
 // @grant none
 // @author Jeff Puckett
-// @version 1.0.0
+// @version 1.0.1
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -58,7 +58,7 @@ function getCurrentUrl() {
 function getCurrentTime() {
   const now = new Date();
   return now.toLocaleString("en-US", {
-    hour: "2-digit",
+    hour: "numeric",
     minute: "2-digit",
     hour12: true,
     timeZone: "America/Chicago",
