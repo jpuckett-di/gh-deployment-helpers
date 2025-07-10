@@ -6,10 +6,10 @@ This userscript automatically adds buttons to GitHub Actions pages and Google Do
 
 - 🔘 **Adaptive button** - Adds context-appropriate buttons to supported pages
   - **GitHub Actions**: "Copy URL Log" button for clipboard operations
-  - **Google Docs**: "Declare Success" button for text insertion
+  - **Google Docs**: "time" button with dual functionality
 - 📋 **Dual clipboard formats** - Copies current page URL as plain text + rich HTML deployment log simultaneously (GitHub only)
-- ✏️ **Success text to clipboard** - Copies timestamped success message for manual pasting (Google Docs only)
-- 🕒 **Auto timestamp** - Generates timestamp in 12-hour format with AM/PM (Central Time)
+- ✏️ **Smart time copy** - Short click copies timestamp only, long click copies full success message (Google Docs only)
+- 🕒 **Auto timestamp** - Generates timestamp in 12-hour format with AM/PM (Central Time, no leading zeros)
 - 🌐 **Current page URL** - Uses the current GitHub Actions page URL automatically
 - ❌ **Removable** - Click the × to remove the button if not needed
 - ✅ **Success feedback** - Shows a green toast notification
@@ -51,19 +51,28 @@ This userscript automatically adds buttons to GitHub Actions pages and Google Do
 1. Navigate to the deployment log document:
    `https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*`
 
-2. You'll see a green "Declare Success" button in the top-left corner with an × close button:
-   **[×] Declare Success**
+2. You'll see a green "time" button in the top-left corner with an × close button:
+   **[×] time**
 
-3. Click the button to:
+3. Use the button with two different actions:
 
-   - Copy "{time} deployment declared successfully" to your clipboard
-   - Show a success notification
+   **Short Click (quick tap):**
+
+   - Copies just the timestamp (e.g., "9:30 AM") to your clipboard
+   - Shows "✅ Time copied to clipboard!" notification
+
+   **Long Click (hold for 1 second):**
+
+   - Button text changes to "declare success" while holding
+   - Copies full message "{time} deployment declared successfully" to your clipboard
+   - Shows "✅ Success text copied to clipboard!" notification
+   - Button text returns to "time" when released
 
 4. Manually paste (Ctrl+V or Cmd+V) at your desired location in the document
 
 ### General
 
-4. Click the × to remove the button if you don't need it
+- Click the × to remove the button if you don't need it
 
 ## Example Output
 
@@ -78,10 +87,10 @@ https://github.com/carsdotcom/di-websites-platform/actions/runs/12345
 **Rich HTML:**
 
 _For di-websites-platform:_
-_Formatted as: `5:26 AM Jeff Puckett started <a href="url">deployment</a>`_
+_Formatted as: `9:30 AM Jeff Puckett started <a href="url">deployment</a>`_
 
 _For di-playwright-automation:_
-_Formatted as: `5:26 AM deployment completed and <a href="url">test suite</a> started`_
+_Formatted as: `9:30 AM deployment completed and <a href="url">test suite</a> started`_
 
 - Time and text with Arial 11pt styling
 - "Jeff Puckett" as clickable email link with rich person metadata (websites-platform only)
@@ -89,10 +98,16 @@ _Formatted as: `5:26 AM deployment completed and <a href="url">test suite</a> st
 
 ### Google Docs
 
-**Copied Text:**
+**Short Click (timestamp only):**
 
 ```
-5:26 AM deployment declared successfully
+9:30 AM
+```
+
+**Long Click (full message):**
+
+```
+9:30 AM deployment declared successfully
 ```
 
 - Text is copied to clipboard for manual pasting in the document
@@ -134,6 +149,7 @@ https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/
 
 **Google Docs** (copied to clipboard):
 
-- **deployment log**: `{time} deployment declared successfully`
+- **short click**: `{time}` (timestamp only)
+- **long click**: `{time} deployment declared successfully` (full message)
 
 To use on different pages, modify the `@match` directives in the userscript header.

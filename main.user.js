@@ -6,7 +6,7 @@
 // @match https://docs.google.com/document/d/1fzr51RGomgIRwenb-rOv6AHxeDVvDHXHmree6HUW0xM/*
 // @grant none
 // @author Jeff Puckett
-// @version 1.0.1
+// @version 1.1.0
 // @description Helper scripts for creating deployment logs
 // @homepageURL https://github.com/jpuckett-di/gh-deployment-helpers
 // @downloadURL https://raw.githubusercontent.com/jpuckett-di/gh-deployment-helpers/refs/heads/main/main.user.js
@@ -92,14 +92,20 @@ async function generateDeploymentLog() {
   }
 }
 
-async function declareSuccess() {
+async function declareSuccess(fullMessage = false) {
   try {
     const time = getCurrentTime();
-    const text = `${time} deployment declared successfully`;
+    const text = fullMessage
+      ? `${time} deployment declared successfully`
+      : time;
 
     // Copy text to clipboard for manual pasting in Google Docs
     await navigator.clipboard.writeText(text);
-    showSuccessToast("✅ Success text copied to clipboard!");
+    showSuccessToast(
+      fullMessage
+        ? "✅ Success text copied to clipboard!"
+        : "✅ Time copied to clipboard!"
+    );
   } catch (error) {
     alert("Error declaring success: " + error.message);
   }
@@ -176,7 +182,7 @@ function createDeploymentLogButton() {
 
   // Check if we're on Google Docs
   if (url.includes("docs.google.com")) {
-    textSpan.textContent = "Declare Success";
+    textSpan.textContent = "time";
   } else {
     textSpan.textContent = "Copy URL Log";
   }
@@ -185,14 +191,46 @@ function createDeploymentLogButton() {
   button.appendChild(closeBtn);
   button.appendChild(textSpan);
 
-  button.addEventListener("click", (e) => {
-    // Only trigger if not clicking the close button
+  // Long press detection variables
+  let pressTimer;
+  let isLongPress = false;
+
+  button.addEventListener("mousedown", (e) => {
     if (e.target !== closeBtn) {
+      isLongPress = false;
+      pressTimer = setTimeout(() => {
+        isLongPress = true;
+        if (url.includes("docs.google.com")) {
+          textSpan.textContent = "declare success";
+          declareSuccess(true); // Full message for long press
+        }
+      }, 1000); // 1 second long press
+    }
+  });
+
+  button.addEventListener("mouseup", (e) => {
+    if (e.target !== closeBtn) {
+      clearTimeout(pressTimer);
+      // Reset text back to "time" if on Google Docs
       if (url.includes("docs.google.com")) {
-        declareSuccess();
-      } else {
-        generateDeploymentLog();
+        textSpan.textContent = "time";
       }
+      // Only trigger short press if it wasn't a long press
+      if (!isLongPress) {
+        if (url.includes("docs.google.com")) {
+          declareSuccess(false); // Just timestamp for short press
+        } else {
+          generateDeploymentLog();
+        }
+      }
+    }
+  });
+
+  button.addEventListener("mouseleave", (e) => {
+    clearTimeout(pressTimer);
+    // Reset text back to "time" if on Google Docs
+    if (url.includes("docs.google.com")) {
+      textSpan.textContent = "time";
     }
   });
 
